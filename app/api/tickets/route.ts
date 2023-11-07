@@ -8,6 +8,23 @@ export interface IRequest extends NextApiRequest {
   formData: ITicket;
 }
 
+export interface ResponseData {
+  tickets?: ITicket[];
+  message?: string;
+}
+
+export async function GET() {
+  try {
+    const tickets = await Ticket.find();
+    return NextResponse.json({ tickets }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error, not found", error },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(req: IRequest) {
   try {
     const body = await req.json();

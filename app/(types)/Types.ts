@@ -3,6 +3,9 @@ export interface ITicket {
     description: string,
     priority: number,
     progress: number,
-    status: string,
-    category: string
-}
+    status: TicketStatusType,
+    category: string,
+    createdAt?: string
+};
+
+export type TicketStatusType = 'not started' | 'started' | 'done';
