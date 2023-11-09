@@ -1,4 +1,5 @@
 export interface ITicket {
+    _id: string,
     title: string,
     description: string,
     priority: number,
