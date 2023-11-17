@@ -1,13 +1,18 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useState } from "react";
-import type { ITicket } from "../(types)/Types";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import type { ITicket } from "../(types)/Types";
 
-const TicketForm = () => {
+interface ITicketFormProps {
+  ticket: ITicket | undefined;
+}
+
+const TicketForm: FC<ITicketFormProps> = ({ ticket }) => {
+  const editMode = ticket?._id === "new" ? false : true;
   const router = useRouter();
 
-  const startingTicketData: ITicket = {
+  const startingTicketData: Omit<ITicket, "_id"> = {
     title: "",
     description: "",
     priority: 1,
@@ -15,6 +20,15 @@ const TicketForm = () => {
     status: "not started",
     category: "Hardware Problem",
   };
+
+  if (editMode && ticket) {
+    startingTicketData.title = ticket.title;
+    startingTicketData.description = ticket.description;
+    startingTicketData.priority = ticket.priority;
+    startingTicketData.progress = ticket.progress;
+    startingTicketData.status = ticket.status;
+    startingTicketData.category = ticket.category;
+  }
 
   const [formData, setFormData] = useState(startingTicketData);
 

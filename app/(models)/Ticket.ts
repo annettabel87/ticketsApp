@@ -1,9 +1,10 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
+import type { ITicket } from "../(types)/Types";
 
 mongoose.connect(process.env.MONGODB_URI as string);
 mongoose.Promise = global.Promise;
 
-const ticketsSchema = new Schema(
+const ticketsSchema = new Schema<ITicket>(
   {
     title: String,
     description: String,
@@ -11,7 +12,6 @@ const ticketsSchema = new Schema(
     priority: Number,
     progress: Number,
     status: String,
-    active: Boolean,
   },
   {
     timestamps: true,
@@ -19,6 +19,6 @@ const ticketsSchema = new Schema(
 );
 
 const Ticket =
-  mongoose.models.Ticket || mongoose.model("Ticket", ticketsSchema);
+  mongoose.models.Ticket || mongoose.model<ITicket>("Ticket", ticketsSchema);
 
 export default Ticket;

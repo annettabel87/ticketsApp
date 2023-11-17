@@ -1,7 +1,7 @@
 import Ticket from "../../(models)/Ticket";
 import { NextResponse } from "next/server";
 import type { NextApiRequest } from "next";
-import { ITicket } from "@/app/(types)/Types";
+import type { ITicket } from "@/app/(types)/Types";
 
 export interface IRequest extends NextApiRequest {
   json(): IRequest | PromiseLike<IRequest>;
