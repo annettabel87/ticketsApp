@@ -2,7 +2,7 @@ import Ticket from "@/app/(models)/Ticket";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  req: NextRequest,
+  req: Request,
   { params }: { params: { id: string } }
 ) {
   try {
