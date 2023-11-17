@@ -46,18 +46,32 @@ const TicketForm: FC<ITicketFormProps> = ({ ticket }) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await fetch("/api/tickets", {
-      method: "POST",
-      body: JSON.stringify({ formData }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    if (!res.ok) {
-      throw new Error("Failed to create ticket!");
+    if (editMode && ticket) {
+      const res = await fetch(`/api/tickets/${ticket._id}`, {
+        method: "PUT",
+        body: JSON.stringify({ formData }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create ticket!");
+      }
+    } else {
+      const res = await fetch("/api/tickets", {
+        method: "POST",
+        body: JSON.stringify({ formData }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create ticket!");
+      }
     }
-
     router.refresh();
     router.push("/");
   };
@@ -69,7 +83,7 @@ const TicketForm: FC<ITicketFormProps> = ({ ticket }) => {
         method="post"
         onSubmit={(e) => handleSubmit(e)}
       >
-        <h3>Create your ticket</h3>
+        <h3>{editMode ? "Update your ticket" : "Create your ticket"}</h3>
         <label htmlFor="title">Title</label>
         <input
           type="text"
@@ -166,7 +180,11 @@ const TicketForm: FC<ITicketFormProps> = ({ ticket }) => {
           <option value="started">Started</option>
           <option value="done">Done</option>
         </select>
-        <input type="submit" value="Create ticket" className="btn" />
+        <input
+          type="submit"
+          value={editMode ? "Update ticket" : "Create ticket"}
+          className="btn"
+        />
       </form>
     </div>
   );

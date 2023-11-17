@@ -1,9 +1,8 @@
 import Ticket from "@/app/(models)/Ticket";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  req: NextApiRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -18,7 +17,7 @@ export async function GET(
 }
 
 export async function DELETE(
-  req: NextApiRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -26,6 +25,29 @@ export async function DELETE(
     await Ticket.findByIdAndDelete(id);
 
     return NextResponse.json({ message: "Ticket deleted" }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { message: "Error, ticket don`t deleted" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const { id } = params;
+    const body = await req.json();
+    const ticketData = body.formData;
+
+    const updateTicketData = await Ticket.findByIdAndUpdate(id, {
+      ...ticketData,
+    });
+
+    return NextResponse.json({ message: "Ticket updated" }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(
