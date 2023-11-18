@@ -1,5 +1,4 @@
 import TicketForm from "@/app/(components)/TicketForm";
-import { BASE_URL } from "@/app/(constants)/constants";
 import type { ITicket } from "@/app/(types)/Types";
 import { FC } from "react";
 
@@ -11,7 +10,7 @@ interface ITicketPageProps {
 
 const getTicketById = async (id: string): Promise<ITicket | undefined> => {
   try {
-    const res = await fetch(`${BASE_URL}/api/tickets/${id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/tickets/${id}`, {
       cache: "no-store",
     });
 
