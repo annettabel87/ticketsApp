@@ -1,11 +1,10 @@
 import { FC } from "react";
 import TicketCard from "./(components)/TicketCard";
-import { BASE_URL } from "./(constants)/constants";
 import type { ResponseData } from "./api/tickets/route";
 
 const getTickets = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/api/tickets`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/tickets`, {
       cache: "no-store",
     });
 

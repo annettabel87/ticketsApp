@@ -2,7 +2,6 @@
 
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { BASE_URL } from "../(constants)/constants";
 import { FC } from "react";
 import { useRouter } from "next/navigation";
 
@@ -14,7 +13,7 @@ const DeleteBlock: FC<IDeleteBlockProps> = ({ id }) => {
   const router = useRouter();
 
   const deleteTicket = async () => {
-    const res = await fetch(`${BASE_URL}/api/tickets/${id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/tickets/${id}`, {
       method: "DELETE",
     });
 
